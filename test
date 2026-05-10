@@ -1,3 +1,4 @@
 # test function
 
-map = 1;
+map = 2;
+fprintf('map: %f', map);
