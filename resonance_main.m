@@ -16,7 +16,7 @@ tol = 1e-6;    % Convergence tolerance for periodic orbit
 fprintf('=== PART I: Ideal Case ===\n');
 
 gamma_I    = 0.02;
-omega_vec  = linspace(0.5, 1.5, 100);
+omega_vec  = linspace(0.5, 1.5, 300);
 R_numeric  = zeros(size(omega_vec));
 R_analytic = 1 ./ sqrt((1 - omega_vec.^2).^2 + 4*gamma_I^2*omega_vec.^2);
 

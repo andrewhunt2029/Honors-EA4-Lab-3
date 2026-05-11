@@ -1,13 +1,16 @@
 % Simulate the nonideal case for the nondimensionalized ODE
 function [t, v, u, R] = nonidealcase_sim(v0, u0, gamma, omega, epsilon, tol)
   sys0 = [v0; u0; 0]; % Vector of initial conditions
-  while true
+  max_iter = 2000;
+  iter = 1;
+  while iter < max_iter
      [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (2*pi/omega)], sys0);
      dist = sqrt((SYS(end, 1) - sys0(1))^2 + (SYS(end, 2) - sys0(2))^2);
      if dist < tol
          break
      end
      sys0 = [SYS(end, 1); SYS(end, 2); 0];
+     iter = iter + 1;
   end
   t = T;
   v = SYS(:, 1);
