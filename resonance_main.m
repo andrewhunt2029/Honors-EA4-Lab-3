@@ -20,6 +20,8 @@ omega_vec  = linspace(0.5, 1.5, 500);
 R_numeric  = zeros(size(omega_vec));
 R_analytic = 1 ./ sqrt((1 - omega_vec.^2).^2 + 4*gamma_I^2*omega_vec.^2);
 
+% A test line to see if R is truly 25 at omega = 1: fprintf('Analytic R at omega = %f: %f', omega_vec(250), R_analytic(250))
+
 % Warm-start: carry converged state forward to next omega
 v0_warm = v0;
 u0_warm = u0;
@@ -51,11 +53,9 @@ fprintf('\n=== PART II: Nonideal Case ===\n');
 
 epsilon = 0.001;
 gamma_vals = [0.06, 0.04, 0.02];
-omega_up = linspace(0.5, 1.5, 150);
-omega_dn = linspace(1.5, 0.5, 150);
-colors = lines(length(gamma_vals));
-
-figure('Name', 'Part II: Nonideal Amplitude Response - Bistability');
+omega_up = linspace(0.5, 1.5, 500);
+omega_dn = linspace(1.5, 0.5, 500);
+colors = lines(length(gamma_vals)*2 + 1);
 
 for gi = 1:length(gamma_vals)
     gamma = gamma_vals(gi);
@@ -82,15 +82,19 @@ for gi = 1:length(gamma_vals)
 
     fprintf('  gamma = %.2f done\n', gamma);
 
-    plot(omega_up, R_up, '-',  'Color', colors(gi,:), 'LineWidth', 2, ...
-         'DisplayName', sprintf('\\gamma=%.2f (up)',   gamma)); hold on;
-    plot(omega_dn, R_dn, '--', 'Color', colors(gi,:), 'LineWidth', 1.5, ...
-         'DisplayName', sprintf('\\gamma=%.2f (down)', gamma));
-end
+    figure('Name', 'Part II: Nonideal Amplitude Response - Bistability');
 
-xlabel('\omega'); ylabel('Response Amplitude R');
-title('Part II: Nonideal Case - Bistability (\epsilon = 0.001)');
-legend('Location', 'northwest'); grid on;
+    plot(omega_up, R_up, 'Color', colors(gi*2,:), 'LineWidth', 2, ...
+         'DisplayName', 'omega sweeping up'); hold on;
+    plot(omega_dn, R_dn, 'Color', colors(gi*2 + 1,:), 'LineWidth', 1.5, ...
+         'DisplayName', 'omega sweeping down');
+
+    xlabel('\omega'); ylabel('Response Amplitude R');
+    title(sprintf('Nonideal Case - Bistability ($\\epsilon$ = 0.001)($\\gamma$ = %.3f)', gamma), ...
+        'Interpreter', 'latex');
+    legend('Location', 'northwest'); grid on;
+
+end
 
 %  PART III: Strongly Nonlinear - Phase Portrait + Poincare Section
 %  gamma = 0.09, omega = 0.8, epsilon = 800
@@ -129,7 +133,7 @@ end
 figure('Name', 'Part III: Poincare Section');
 plot(poincare_v, poincare_u, 'k.', 'MarkerSize', 4);
 xlabel('v'); ylabel('dv/dt');
-title(sprintf('Part III: Poincar\\e Section (%d periods, \\gamma=0.09, \\omega=0.8, \\epsilon=800)', n_periods));
+title(sprintf('Part III: Poincar\e Section (%d periods, \gamma=0.09, \omega=0.8, \epsilon=800)', n_periods));
 grid on;
 
 %  BONUS: Find another interesting case
@@ -159,7 +163,7 @@ end
 figure('Name', 'Bonus: Poincare Section');
 plot(poincare_vb, poincare_ub, 'r.', 'MarkerSize', 4);
 xlabel('v'); ylabel('dv/dt');
-title(sprintf('Bonus Poincar\\e Section (\\gamma=%.2f, \\omega=%.2f, \\epsilon=%d)', ...
+title(sprintf('Bonus Poincar\e Section (\gamma=%.2f, \omega=%.2f, \epsilon=%d)', ...
               gamma_b, omega_b, epsilon_b));
 grid on;
 
