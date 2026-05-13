@@ -3,7 +3,7 @@ function [t, v, u, R] = nonidealcase_sim(v0, u0, gamma, omega, epsilon, tol)
   sys0 = [v0; u0; 0];
 
   if isnan(tol)  % NaN signals: just integrate one period, don't preform a convergence check.
-      [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (2*pi/omega)], sys0, odeset('RelTol',1e-10,'AbsTol',1e-12));
+      [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (2*pi/omega)], sys0);
   else
       max_iter = 2000;
       iter = 1;
