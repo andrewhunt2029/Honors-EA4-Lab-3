@@ -123,7 +123,7 @@ v0_p = v_conv(end);
 u0_p = u_conv(end);
 
 for k = 1:n_periods
-    [~, v_tmp, u_tmp, ~] = nonidealcase_sim(v0_p, u0_p, gamma_III, omega_III, epsilon_III, tol);
+    [~, v_tmp, u_tmp, ~] = nonidealcase_sim(v0_p, u0_p, gamma_III, omega_III, epsilon_III, NaN);
     poincare_v(k) = v_tmp(end);
     poincare_u(k) = u_tmp(end);
     v0_p = v_tmp(end);
@@ -153,7 +153,7 @@ poincare_vb = zeros(n_periods, 1);
 poincare_ub = zeros(n_periods, 1);
 
 for k = 1:n_periods
-    [~, v_tmp, u_tmp, ~] = nonidealcase_sim(v0_b, u0_b, gamma_b, omega_b, epsilon_b, tol);
+    [~, v_tmp, u_tmp, ~] = nonidealcase_sim(v0_b, u0_b, gamma_b, omega_b, epsilon_b, NaN);
     poincare_vb(k) = v_tmp(end);
     poincare_ub(k) = u_tmp(end);
     v0_b = v_tmp(end);
