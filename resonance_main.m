@@ -13,14 +13,13 @@ tol = 1e-6;    % Convergence tolerance for periodic orbit
 
 %  PART I: Ideal Case - Amplitude Response Curve
 %  gamma = 0.02, omega swept from 0.5 to 1.5
+
 fprintf('=== PART I: Ideal Case ===\n');
 
 gamma_I    = 0.02;
-omega_vec  = linspace(0.5, 1.5, 500);
+omega_vec  = linspace(0.5, 1.5, 501);
 R_numeric  = zeros(size(omega_vec));
 R_analytic = 1 ./ sqrt((1 - omega_vec.^2).^2 + 4*gamma_I^2*omega_vec.^2);
-
-% A test line to see if R is truly 25 at omega = 1: fprintf('Analytic R at omega = %f: %f', omega_vec(250), R_analytic(250))
 
 % Warm-start: carry converged state forward to next omega
 v0_warm = v0;
@@ -32,7 +31,7 @@ for k = 1:length(omega_vec)
     v0_warm = v_tmp(end);
     u0_warm = u_tmp(end);
 
-    if mod(k, 10) == 0
+    if mod(k-1, 10) == 0
         fprintf('  omega = %.2f | R_numeric = %.4f | R_analytic = %.4f\n', ...
                 omega, R_numeric(k), R_analytic(k));
     end
