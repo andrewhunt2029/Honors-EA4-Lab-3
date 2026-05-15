@@ -80,6 +80,8 @@ for gi = 1:length(gamma_vals)
     end
 
     fprintf('  gamma = %.2f done\n', gamma);
+    fprintf('      R up max = %.2f, occurs at omega = %.2f \n', max(R_up), omega_up(R_up == max(R_up)));
+    fprintf('      R dn max = %.2f, occurs at omega = %.2f \n', max(R_dn), omega_dn(R_dn == max(R_dn)));
 
     figure('Name', 'Part II: Nonideal Amplitude Response - Bistability');
 
