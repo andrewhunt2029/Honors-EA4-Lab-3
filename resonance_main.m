@@ -134,7 +134,10 @@ end
 figure('Name', 'Part III: Poincare Section');
 plot(poincare_v, poincare_u, 'k.', 'MarkerSize', 4);
 xlabel('v'); ylabel('dv/dt');
-title(sprintf('Part III: Poincar\e Section (%d periods, \gamma=0.09, \omega=0.8, \epsilon=800)', n_periods));
+title(sprintf(['Part III: Poincar\\''{e} Section (%d periods, ', ...
+               '$\\gamma=0.09$, $\\omega=0.8$, $\\varepsilon=800$)'], ...
+               n_periods), ...
+      'Interpreter', 'latex');
 grid on;
 
 %  BONUS: Find another interesting case
@@ -143,9 +146,9 @@ grid on;
 fprintf('\n=== BONUS: Alternative Parameter Exploration ===\n');
 
 % parameters (chosen by hand after some running of the code to find which produce an interesting result)
-gamma_b   = 0.09;
-omega_b   = 1;
-epsilon_b = 800;
+gamma_b   = 1;
+omega_b   = 0.02;
+epsilon_b = 1100;
 
 % Converge to periodic oscillation
 [~, v_b, u_b, ~] = nonidealcase_sim(v0, u0, gamma_b, omega_b, epsilon_b, tol);
@@ -154,7 +157,7 @@ epsilon_b = 800;
 figure('Name', 'Bonus: Phase Portrait');
 plot(v_b, u_b, 'b-', 'LineWidth', 0.3);
 xlabel('v'); ylabel('dv/dt');
-title('Part III: Phase Portrait (\gamma=0.09, \omega=1, \epsilon=800, periods = 200)');
+title('Part III: Phase Portrait (\gamma=1, \omega=0.02, \epsilon=1100, periods = 200)');
 grid on;
 
 % Build Poincare section
@@ -174,8 +177,9 @@ end
 figure('Name', 'Bonus: Poincare Section');
 plot(poincare_vb, poincare_ub, 'r.', 'MarkerSize', 4);
 xlabel('v'); ylabel('dv/dt');
-title(sprintf('Bonus Poincar\e Section (\gamma=%.2f, \omega=%.2f, \epsilon=%d)', ...
-              gamma_b, omega_b, epsilon_b));
+title(sprintf("Bonus Poincar\\'{e} Section ($\\gamma$=%.2f, $\\omega$=%.2f, $\\epsilon$=%d)", ...
+              gamma_b, omega_b, epsilon_b), ...
+      'Interpreter', 'latex');
 grid on;
 
 fprintf('\nAll parts complete.\n');
