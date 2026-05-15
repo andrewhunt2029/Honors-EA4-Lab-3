@@ -1,18 +1,24 @@
 % Simulate the nonideal case for the nondimensionalized ODE
 function [t, v, u, R] = nonidealcase_sim(v0, u0, gamma, omega, epsilon, tol)
   sys0 = [v0; u0; 0];
-
-  if isnan(tol)  % NaN signals: just integrate one period, don't preform a convergence check.
+  if isnan(tol)  % NaN signals: just integrate one period, don't perform a convergence check (use for poincare).
       [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (2*pi/omega)], sys0);
+      
   else
-      max_iter = 2000;
+      max_iter = 100000;
       iter = 1;
       while iter < max_iter
           [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (2*pi/omega)], sys0);
           dist = sqrt((SYS(end,1) - sys0(1))^2 + (SYS(end,2) - sys0(2))^2);
-          if dist < tol, break; end
+          if dist < tol
+              break; 
+          end
           sys0 = [SYS(end,1); SYS(end,2); 0];
           iter = iter + 1;
+      end
+      
+      if epsilon ~= 0.001 % means that we are running Part III
+        [T, SYS] = ode45(@(t, sys) rhs(t, sys, gamma, omega, epsilon), [0 (400*pi/omega)], sys0); % get 200 periods of steady state
       end
   end
 

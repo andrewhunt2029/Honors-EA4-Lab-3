@@ -98,21 +98,21 @@ end
 %  PART III: Strongly Nonlinear - Phase Portrait + Poincare Section
 %  gamma = 0.09, omega = 0.8, epsilon = 800
 
-fprintf('\n=== PART III: Poincare Section ===\n');
+fprintf('\n=== PART III: Strongly Nonlinear Case ===\n');
 
 gamma_III = 0.09;
 omega_III = 0.8;
 epsilon_III = 800;
-n_periods = 500;
+n_periods = 5000;
 
 % Converge to periodic orbit first
 [~, v_conv, u_conv, ~] = nonidealcase_sim(v0, u0, gamma_III, omega_III, epsilon_III, tol);
 
 % Phase portrait of converged orbit
 figure('Name', 'Part III: Phase Portrait');
-plot(v_conv, u_conv, 'b-', 'LineWidth', 1.5);
+plot(v_conv, u_conv, 'b-', 'LineWidth', 0.3);
 xlabel('v'); ylabel('dv/dt');
-title('Part III: Phase Portrait (\gamma=0.09, \omega=0.8, \epsilon=800)');
+title('Part III: Phase Portrait (\gamma=0.09, \omega=0.8, \epsilon=800, periods = 200)');
 grid on;
 
 % Build Poincare section: sample [v, u] at start of each period
@@ -140,16 +140,26 @@ grid on;
 
 fprintf('\n=== BONUS: Alternative Parameter Exploration ===\n');
 
-gamma_b   = 0.05;
-omega_b   = 0.85;
+% parameters (chosen by hand after some running of the code to find which produce an interesting result)
+gamma_b   = 0.09;
+omega_b   = 1;
 epsilon_b = 800;
 
+% Converge to periodic oscillation
 [~, v_b, u_b, ~] = nonidealcase_sim(v0, u0, gamma_b, omega_b, epsilon_b, tol);
 
-v0_b = v_b(end);
-u0_b = u_b(end);
+% Phase portrait of converged orbit
+figure('Name', 'Bonus: Phase Portrait');
+plot(v_b, u_b, 'b-', 'LineWidth', 0.3);
+xlabel('v'); ylabel('dv/dt');
+title('Part III: Phase Portrait (\gamma=0.09, \omega=1, \epsilon=800, periods = 200)');
+grid on;
+
+% Build Poincare section
 poincare_vb = zeros(n_periods, 1);
 poincare_ub = zeros(n_periods, 1);
+v0_b = v_b(end);
+u0_b = u_b(end);
 
 for k = 1:n_periods
     [~, v_tmp, u_tmp, ~] = nonidealcase_sim(v0_b, u0_b, gamma_b, omega_b, epsilon_b, NaN);
